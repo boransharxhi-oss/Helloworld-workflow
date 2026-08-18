@@ -47,6 +47,62 @@ jobs:
       # - name: Push Docker image to Docker Hub
       #   run: |
       #     docker tag hello-world:latest ${{ secrets.DOCKER_USERNAME }}/hello-world:latest
-      #     docker push ${{ secrets.DOCKER_USERNAME }}/hello-world:latest    
+      #     docker push ${{ secrets.DOCKER_USERNAME }}/hello-world:latest
 
+      # Step 6: Save Docker image as tar file for release
+      - name: Save Docker image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          docker save hello-world:latest -o hello-world-${{ github.sha }}.tar
+
+  # Job 2: Create GitHub Release
+  release:
+    needs: build
+    runs-on: self-hosted
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout code
+        uses: actions/checkout@v4
       
+      # Step 2: Build Docker image again for release
+      - name: Build Docker image
+        run: |
+          docker build -t hello-world:${{ github.sha }} .
+          docker build -t hello-world:latest .
+      
+      # Step 3: Save Docker image as tar
+      - name: Save Docker image as tar
+        run: |
+          docker save hello-world:latest -o hello-world-${{ github.sha }}.tar
+      
+      # Step 4: Create GitHub Release with tag
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ github.run_number }}
+          name: Release v${{ github.run_number }}
+          body: |
+            Docker Image Release
+            
+            **Image Details:**
+            - Image: hello-world:${{ github.sha }}
+            - Latest Tag: hello-world:latest
+            - Commit: ${{ github.sha }}
+            
+            **What's included:**
+            - Docker image (TAR format)
+            - Dockerfile
+            - Application files
+            
+            To load the Docker image:
+            ```bash
+            docker load -i hello-world-${{ github.sha }}.tar
+            docker run -p 8080:80 hello-world:latest
+            ```
+          files: |
+            hello-world-${{ github.sha }}.tar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
