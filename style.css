@@ -1,0 +1,78 @@
+:root {
+  --bg: #f4f7fb;
+  --card: rgba(255, 255, 255, 0.9);
+  --primary: #4f46e5;
+  --primary-dark: #3730a3;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --shadow: rgba(79, 70, 229, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 50%, #e0f2fe 100%);
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+}
+
+.card {
+  width: min(90vw, 420px);
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 22px;
+  box-shadow: 0 20px 50px var(--shadow);
+  padding: 2.25rem 2rem;
+  text-align: center;
+  backdrop-filter: blur(12px);
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+h1 {
+  margin: 0 0 1.5rem;
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  line-height: 1.1;
+}
+
+button {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 12px 24px rgba(79, 70, 229, 0.3);
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+#message {
+  min-height: 1.5rem;
+  margin: 1.25rem 0 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
