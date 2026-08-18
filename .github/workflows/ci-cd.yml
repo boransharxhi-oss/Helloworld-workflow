@@ -12,7 +12,7 @@ on:
 jobs:
   # Job 1: Build the Docker image
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     
     steps:
       # Step 1: Check out the code from your repository
@@ -58,7 +58,7 @@ jobs:
   # Job 2: Create GitHub Release
   release:
     needs: build
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     
     steps:
