@@ -15,7 +15,7 @@ permissions:
 jobs:
   # Job 1: Build the Docker image
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     
     steps:
       # Step 1: Check out the code from your repository
