@@ -10,7 +10,7 @@ on:
       - main
 
 permissions:
-  contents: write    
+  contents: write
 
 defaults:
   run:
@@ -87,7 +87,7 @@ jobs:
         with:
           name: docker-image
           path: .
-      
+    
       # Step 3: Create GitHub Release with tag
       - name: Create GitHub Release with Docker image
         uses: softprops/action-gh-release@v1
