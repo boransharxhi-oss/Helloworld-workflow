@@ -12,6 +12,10 @@ on:
 permissions:
   contents: write    
 
+defaults:
+  run:
+    shell: cmd
+
 jobs:
   # Job 1: Build the Docker image
   build:
@@ -36,7 +40,7 @@ jobs:
       - name: Test Docker image
         run: |
           docker run -d -p 8080:80 hello-world:latest
-          sleep 2
+          timeout /t 2 /nobreak >nul
           curl http://localhost:8080 || echo "Server check failed"
       
       # Step 5: (Optional) Log in to Docker Hub and push the image
