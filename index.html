@@ -3,19 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="theme-color" content="#eef2ff">
+    <title>Hello World | Static App</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
-</html>
 <body>
     <main class="card">
-        <p class="eyebrow">Static App</p>
-        <h1>Test per Docker</h1>
-        <button onclick="document.getElementById('message').textContent = 'Hello World'">
-            Click me
+        <div class="status" aria-label="Application status">
+            <span class="status-dot"></span>
+            <span>Live and ready</span>
+        </div>
+        <p class="eyebrow">Static App / 001</p>
+        <h1>Hello, <span>World.</span></h1>
+        <p class="intro">A tiny Docker-powered space for big first impressions.</p>
+        <button id="launch-button" type="button">
+            <span>Launch a hello</span>
+            <span class="button-arrow" aria-hidden="true">&#8594;</span>
         </button>
-        <p id="message" aria-live="polite"></p>
+        <p id="message" aria-live="polite">Waiting for your signal...</p>
+        <p class="counter"><span id="click-count">0</span> launches from this browser</p>
     </main>
+    <script>
+        const launchButton = document.getElementById('launch-button');
+        const message = document.getElementById('message');
+        const clickCount = document.getElementById('click-count');
+        let launches = 0;
+
+        launchButton.addEventListener('click', () => {
+            launches += 1;
+            message.textContent = launches === 1
+                ? 'Hello World. Connection made.'
+                : `Hello World x${launches}. Still going strong.`;
+            clickCount.textContent = launches;
+            launchButton.classList.add('is-launched');
+            window.setTimeout(() => launchButton.classList.remove('is-launched'), 450);
+        });
+    </script>
 </body>
 </html>
