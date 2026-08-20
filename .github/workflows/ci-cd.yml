@@ -100,7 +100,7 @@ jobs:
   # Job 3: Deploy the static web app to GitHub Pages
   deploy-pages:
     needs: build
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     permissions:
       contents: read
